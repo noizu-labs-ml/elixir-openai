@@ -11,7 +11,7 @@ defmodule NoizuLabs.OpenAI.Application do
       # Start the Telemetry supervisor
       NoizuLabs.OpenAIWeb.Telemetry,
       # Start the Ecto repository
-      NoizuLabs.OpenAI.Repo,
+      # NoizuLabs.OpenAI.Repo,
       # Start the PubSub system
       {Phoenix.PubSub, name: NoizuLabs.OpenAI.PubSub},
       # Start Finch
