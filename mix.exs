@@ -20,7 +20,7 @@ defmodule NoizuLabsOpenAI.MixProject do
   # Run "mix help compile.app" to learn about applications.
   def application do
     [
-      applications: [:noizu_labs_open_ai],
+      #applications: [:noizu_labs_open_ai],
       extra_applications: [:logger, :finch, :jason]
     ]
   end
