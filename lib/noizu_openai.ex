@@ -8,7 +8,7 @@ defmodule NoizuLabs.OpenAI do
   """
 
   @openai_base "https://api.openai.com/v1/"
-
+  require Logger
   defp headers() do
     [
       {"Content-Type", "application/json"},
@@ -41,17 +41,28 @@ defmodule NoizuLabs.OpenAI do
   end
 
   defp api_call_fetch(type, url, body) do
-    Finch.build(type, url, headers(), body)
+    Finch.build(type, url, headers(), body, timeout: 60_000)
     |> Finch.request(NoizuLabs.OpenAI.Finch)
   end
 
   defp api_call(type, url, body, model) do
+    payload =  %{
+      type: type,
+      url: url,
+      body: body,
+      model: model
+    }
+   Logger.info("API REQUEST:\n#{inspect payload}")
+
     with {:ok, %Finch.Response{status: 200, body: body}},
          {:ok, body} <- body && Jason.encode(body) || {:ok, nil},
          {:ok, %Finch.Response{status: 200, body: body}} <- api_call_fetch(type, url, body),
          {:ok, json} <- Jason.decode(body, keys: :atoms) do
       {:ok, json}
       #apply(model, :from_json, [json])
+      else
+      error ->
+      Logger.warn("API ERROR: \n #{inspect error}")
     end
   end
 
@@ -181,20 +192,20 @@ defmodule NoizuLabs.OpenAI do
   end
 
 
-  def files(options \\ nil) do
+  def files(_options \\ nil) do
     url = @openai_base <> "files"
     body = nil
     api_call(:get, url, body, NoizuLabs.OpenAI.Files)
   end
 
 
-  def file_info(file, options \\ nil) do
+  def file_info(file, _options \\ nil) do
     url = @openai_base <> "files/#{file}"
     body = nil
     api_call(:get, url, body, NoizuLabs.OpenAI.File)
   end
 
-  def file(file, options \\ nil) do
+  def file(file, _options \\ nil) do
     url = @openai_base <> "files/#{file}/content"
     body = nil
     api_call(:get, url, body, NoizuLabs.OpenAI.File)
@@ -207,7 +218,7 @@ defmodule NoizuLabs.OpenAI do
     api_call(:post, url, body, NoizuLabs.OpenAI.File)
   end
 
-  def delete_file(file, options \\ nil) do
+  def delete_file(file, _options \\ nil) do
     url = @openai_base <> "files/#{file}"
     body = nil
     api_call(:delete, url, body, NoizuLabs.OpenAI.DeleteFile)
