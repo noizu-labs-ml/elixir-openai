@@ -1,10 +1,10 @@
-defmodule NoizuLabsOpenAI.MixProject do
+defmodule Noizu.OpenAI.MixProject do
   use Mix.Project
 
   def project do
     [
       app: :noizu_labs_open_ai,
-      name: "NoizuLabs OpenAI",
+      name: "Noizu Labs: OpenAI",
       version: "0.1.0",
       elixir: "~> 1.14",
       elixirc_paths: elixirc_paths(Mix.env()),
@@ -20,7 +20,11 @@ defmodule NoizuLabsOpenAI.MixProject do
   # Run "mix help compile.app" to learn about applications.
   def application do
     [
-      #applications: [:noizu_labs_open_ai],
+      mod: {
+        Noizu.OpenAI.Application,
+        [
+        ]
+      },
       extra_applications: [:logger, :finch, :jason]
     ]
   end
@@ -28,7 +32,7 @@ defmodule NoizuLabsOpenAI.MixProject do
   # Run "mix help deps" to learn about dependencies.
   defp deps do
     [
-      {:finch, "~> 0.13"},
+      {:finch, "~> 0.15"},
       {:jason, "~> 1.2"},
 
       # {:dep_from_hexpm, "~> 0.3.0"},

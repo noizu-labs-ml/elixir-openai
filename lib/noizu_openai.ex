@@ -1,6 +1,6 @@
-defmodule NoizuLabs.OpenAI do
+defmodule Noizu.OpenAI do
   @moduledoc """
-  NoizuLabs.OpenAI keeps the contexts that define your domain
+  Noizu.OpenAI keeps the contexts that define your domain
   and business logic.
 
   Contexts are also responsible for managing your data, regardless
@@ -47,13 +47,13 @@ defmodule NoizuLabs.OpenAI do
   defp api_call_fetch(type, url, body) do
     Finch.build(type, url, headers(), body)
     #|> IO.inspect(limit: :infinity, label: "REQUEST")
-    |> Finch.request(NoizuLabs.OpenAI.Finch, [timeout: 600_000, receive_timeout: 600_000])
+    |> Finch.request(Noizu.OpenAI.Finch, [timeout: 600_000, receive_timeout: 600_000])
   end
 
   defp api_call_stream(type, url, body, {code, cb}) do
     Finch.build(type, url, headers(), body)
     #|> IO.inspect(limit: :infinity, label: "STREAM REQUEST #{inspect {code, cb}}")
-    |> Finch.stream(NoizuLabs.OpenAI.Finch, %{headers: nil, status: nil, message: "", code: code}, cb, [timeout: 600_000, receive_timeout: 600_000])
+    |> Finch.stream(Noizu.OpenAI.Finch, %{headers: nil, status: nil, message: "", code: code}, cb, [timeout: 600_000, receive_timeout: 600_000])
   end
 
   defp api_call(type, url, body, model, stream \\ false) do
@@ -75,6 +75,7 @@ defmodule NoizuLabs.OpenAI do
       else
         error ->
           Logger.warn("STREAM API ERROR: \n #{inspect error}")
+          error
       end
     else
       with {:ok, %Finch.Response{status: 200, body: body}},
@@ -86,18 +87,19 @@ defmodule NoizuLabs.OpenAI do
       else
         error ->
           Logger.warn("API ERROR: \n #{inspect error}")
+          error
       end
     end
   end
 
   def models() do
     url = @openai_base <> "models"
-    api_call(:get, url, nil, NoizuLabs.OpenAI.Models)
+    api_call(:get, url, nil, Noizu.OpenAI.Models)
   end
 
   def model(model) do
     url = @openai_base <> "models/#{model}"
-    api_call(:get, url, nil, NoizuLabs.OpenAI.Model)
+    api_call(:get, url, nil, Noizu.OpenAI.Model)
   end
 
 
@@ -119,7 +121,7 @@ defmodule NoizuLabs.OpenAI do
            |> put_field(:best_of, options)
            |> put_field(:logit_bias, options)
            |> put_field(:user, options)
-    api_call(:post, url, body, NoizuLabs.OpenAI.Completion, options[:stream])
+    api_call(:post, url, body, Noizu.OpenAI.Completion, options[:stream])
   end
 
   def chat(messages, options \\ nil) do
@@ -135,7 +137,7 @@ defmodule NoizuLabs.OpenAI do
            |> put_field(:presence_penalty, options)
            |> put_field(:logit_bias, options)
            |> put_field(:user, options)
-    api_call(:post, url, body, NoizuLabs.OpenAI.Chat, options[:stream])
+    api_call(:post, url, body, Noizu.OpenAI.Chat, options[:stream])
   end
 
 
@@ -146,7 +148,7 @@ defmodule NoizuLabs.OpenAI do
            |> put_field({:completions, :n}, options)
            |> put_field(:temperature, options)
            |> put_field(:top_p, options)
-    api_call(:post, url, body, NoizuLabs.OpenAI.Edit, options[:stream])
+    api_call(:post, url, body, Noizu.OpenAI.Edit, options[:stream])
   end
 
 
@@ -158,7 +160,7 @@ defmodule NoizuLabs.OpenAI do
            |> put_field(:size, options)
            |> put_field(:response_format, options)
            |> put_field(:user, options)
-    api_call(:post, url, body, NoizuLabs.OpenAI.Image, options[:stream])
+    api_call(:post, url, body, Noizu.OpenAI.Image, options[:stream])
   end
 
 
@@ -171,7 +173,7 @@ defmodule NoizuLabs.OpenAI do
            |> put_field(:size, options)
            |> put_field(:response_format, options)
            |> put_field(:user, options)
-    api_call(:post, url, body, NoizuLabs.OpenAI.ImageEdit, options[:stream])
+    api_call(:post, url, body, Noizu.OpenAI.ImageEdit, options[:stream])
   end
 
 
@@ -182,15 +184,15 @@ defmodule NoizuLabs.OpenAI do
            |> put_field(:size, options)
            |> put_field(:response_format, options)
            |> put_field(:user, options)
-    api_call(:post, url, body, NoizuLabs.OpenAI.ImageVariation, options[:stream])
+    api_call(:post, url, body, Noizu.OpenAI.ImageVariation, options[:stream])
   end
 
   def embeddings(input, options \\ nil) do
     url = @openai_base <> "embeddings"
     body = %{input: input}
-           |> put_field(:model, options)
+           |> put_field(:model, options, "text-embedding-ada-002")
            |> put_field(:user, options)
-    api_call(:post, url, body, NoizuLabs.OpenAI.Completion, options[:stream])
+    api_call(:post, url, body, Noizu.OpenAI.Completion, options[:stream])
   end
 
   def transcribe(audio, prompt, options \\ nil) do
@@ -201,7 +203,7 @@ defmodule NoizuLabs.OpenAI do
            |> put_field(:prompt, options, prompt)
            |> put_field(:temperature, options)
            |> put_field(:language, options)
-    api_call(:post, url, body, NoizuLabs.OpenAI.Transcription, options[:stream])
+    api_call(:post, url, body, Noizu.OpenAI.Transcription, options[:stream])
   end
 
 
@@ -212,47 +214,47 @@ defmodule NoizuLabs.OpenAI do
            |> put_field(:response_format, options)
            |> put_field(:prompt, options, prompt)
            |> put_field(:temperature, options)
-    api_call(:post, url, body, NoizuLabs.OpenAI.Translation, options[:stream])
+    api_call(:post, url, body, Noizu.OpenAI.Translation, options[:stream])
   end
 
 
   def files(options \\ nil) do
     url = @openai_base <> "files"
     body = nil
-    api_call(:get, url, body, NoizuLabs.OpenAI.Files, options[:stream])
+    api_call(:get, url, body, Noizu.OpenAI.Files, options[:stream])
   end
 
 
   def file_info(file, options \\ nil) do
     url = @openai_base <> "files/#{file}"
     body = nil
-    api_call(:get, url, body, NoizuLabs.OpenAI.File, options[:stream])
+    api_call(:get, url, body, Noizu.OpenAI.File, options[:stream])
   end
 
   def file(file, options \\ nil) do
     url = @openai_base <> "files/#{file}/content"
     body = nil
-    api_call(:get, url, body, NoizuLabs.OpenAI.File, options[:stream])
+    api_call(:get, url, body, Noizu.OpenAI.File, options[:stream])
   end
 
   def upload_file(file, options \\ nil) do
     url = @openai_base <> "files"
     body = %{file: file}
            |> put_field(:purpose, options)
-    api_call(:post, url, body, NoizuLabs.OpenAI.File, options[:stream])
+    api_call(:post, url, body, Noizu.OpenAI.File, options[:stream])
   end
 
   def delete_file(file, options \\ nil) do
     url = @openai_base <> "files/#{file}"
     body = nil
-    api_call(:delete, url, body, NoizuLabs.OpenAI.DeleteFile, options[:stream])
+    api_call(:delete, url, body, Noizu.OpenAI.DeleteFile, options[:stream])
   end
 
   def moderation(input, options \\ nil) do
     url = @openai_base <> "moderations"
     body = %{input: input}
            |> put_field(:model, options)
-    api_call(:post, url, body, NoizuLabs.OpenAI.Moderation, options[:stream])
+    api_call(:post, url, body, Noizu.OpenAI.Moderation, options[:stream])
   end
 
 end
