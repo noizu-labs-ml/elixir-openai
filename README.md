@@ -32,16 +32,16 @@ Replace `"your_openai_api_key"` with your actual OpenAI API key, and `"your_open
 
 Noizu.OpenAI provides modules for different OpenAI API endpoints:
 
-- Noizu.OpenAI.Api.Audio
-- Noizu.OpenAI.Api.Chat
-- Noizu.OpenAI.Api.Completion
-- Noizu.OpenAI.Api.Edit
-- Noizu.OpenAI.Api.Embedding
-- Noizu.OpenAI.Api.Engine
-- Noizu.OpenAI.Api.File
-- Noizu.OpenAI.Api.FineTune
-- Noizu.OpenAI.Api.Image
-- Noizu.OpenAI.Api.Model
+- [Noizu.OpenAI.Api.Audio](lib/api/audio/README.md)
+- [Noizu.OpenAI.Api.Chat](lib/api/chat/README.md)
+- [Noizu.OpenAI.Api.Completion](lib/api/completion/README.md)
+- [Noizu.OpenAI.Api.Edit](lib/api/edit/README.md)
+- [Noizu.OpenAI.Api.Embedding](lib/api/embedding/README.md)
+- [Noizu.OpenAI.Api.Engine](lib/api/engine/README.md)
+- [Noizu.OpenAI.Api.File](lib/api/file/README.md)
+- [Noizu.OpenAI.Api.FineTune](api/fine_tune/README.md)
+- [Noizu.OpenAI.Api.Image](api/image/README.md)
+- [Noizu.OpenAI.Api.Model](api/model/README.md)
 
 Each module corresponds to a specific functionality provided by the OpenAI API. You can use the functions in these modules to interact with the respective API endpoints.
 
