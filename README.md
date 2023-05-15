@@ -9,7 +9,7 @@ To install Noizu.OpenAI, add the following to your `mix.exs` file:
 ```elixir
 defp deps do
   [
-    {:noizu_openai, "~> 0.1.0"}
+    {:noizu_labs_open_ai, "~> 0.1.0"}
   ]
 end
 ```
