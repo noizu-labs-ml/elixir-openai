@@ -191,7 +191,8 @@ defmodule Noizu.OpenAI do
   #-------------------------------
   defp api_call_fetch(type, url, body) do
     Finch.build(type, url, headers(), body)
-    |> Finch.request(Noizu.OpenAI.Finch, [timeout: 600_000, receive_timeout: 600_000])
+    # |> IO.inspect(label: "API_CALL_FETCH", limit: :infinity, printable_limit: :infinity, pretty: true)
+    |> Finch.request(Noizu.OpenAI.Finch, [pool_timeout: 600_000, receive_timeout: 600_000])
   end
 
   #-------------------------------
