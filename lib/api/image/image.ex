@@ -57,7 +57,7 @@ defmodule Noizu.OpenAI.Api.Image do
            |> put_field(:size, options)
            |> put_field(:response_format, options)
            |> put_field(:user, options)
-    api_call(:post, url, body, Noizu.OpenAI.Images, options[:stream])
+    api_call(:post, url, body, Noizu.OpenAI.Images, options)
   end
 
 
@@ -102,7 +102,7 @@ defmodule Noizu.OpenAI.Api.Image do
            |> put_field(:size, options)
            |> put_field(:response_format, options)
            |> put_field(:user, options)
-    api_call(:post, url, body, Noizu.OpenAI.Images, options[:stream])
+    api_call(:post, url, body, Noizu.OpenAI.Images, options)
   end
 
 
@@ -145,7 +145,7 @@ defmodule Noizu.OpenAI.Api.Image do
            |> put_field(:size, options)
            |> put_field(:response_format, options)
            |> put_field(:user, options)
-    api_call(:post, url, body, Noizu.OpenAI.Images, options[:stream])
+    api_call(:post, url, body, Noizu.OpenAI.Images, options)
   end
 
 

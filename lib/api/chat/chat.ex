@@ -69,7 +69,7 @@ defmodule Noizu.OpenAI.Api.Chat do
            |> put_field(:presence_penalty, options)
            |> put_field(:logit_bias, options)
            |> put_field(:user, options)
-    api_call(:post, url, body, Noizu.OpenAI.Chat, options[:stream])
+    api_call(:post, url, body, Noizu.OpenAI.Chat, options)
   end
 
 

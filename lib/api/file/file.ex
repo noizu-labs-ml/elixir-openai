@@ -49,7 +49,7 @@ defmodule Noizu.OpenAI.Api.File do
   def list(options \\ nil) do
     url = openai_base() <> "files"
     body = nil
-    api_call(:get, url, body, Noizu.OpenAI.Files, options[:stream])
+    api_call(:get, url, body, Noizu.OpenAI.Files, options)
   end
 
 
@@ -78,7 +78,7 @@ defmodule Noizu.OpenAI.Api.File do
   def info(file, options \\ nil) do
     url = openai_base() <> "files/#{file}"
     body = nil
-    api_call(:get, url, body, Noizu.OpenAI.File, options[:stream])
+    api_call(:get, url, body, Noizu.OpenAI.File, options)
   end
 
 
@@ -104,7 +104,8 @@ defmodule Noizu.OpenAI.Api.File do
   def fetch(file, options \\ nil) do
     url = openai_base() <> "files/#{file}/content"
     body = nil
-    api_call(:get, url, body, Noizu.OpenAI.File.Content, options[:stream], raw: true)
+    options = put_in(options || [], [:raw], true)
+    api_call(:get, url, body, Noizu.OpenAI.File.Content, options)
   end
 
 
@@ -142,7 +143,7 @@ defmodule Noizu.OpenAI.Api.File do
     url = openai_base() <> "files"
     body = %{file: file}
            |> put_field(:purpose, options)
-    api_call(:post, url, body, Noizu.OpenAI.File, options[:stream])
+    api_call(:post, url, body, Noizu.OpenAI.File, options)
   end
 
 
@@ -173,7 +174,7 @@ defmodule Noizu.OpenAI.Api.File do
   def delete(file, options \\ nil) do
     url = openai_base() <> "files/#{file}"
     body = nil
-    api_call(:delete, url, body, Noizu.OpenAI.File.Delete, options[:stream])
+    api_call(:delete, url, body, Noizu.OpenAI.File.Delete, options)
   end
 
 

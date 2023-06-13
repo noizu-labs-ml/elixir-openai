@@ -59,7 +59,7 @@ defmodule Noizu.OpenAI.Api.Moderation do
     url = openai_base() <> "moderations"
     body = %{input: input}
            |> put_field(:model, options)
-    api_call(:post, url, body, Noizu.OpenAI.Moderation, options[:stream])
+    api_call(:post, url, body, Noizu.OpenAI.Moderation, options)
   end
 
 end

@@ -55,7 +55,7 @@ defmodule Noizu.OpenAI.Api.Edit do
            |> put_field({:completions, :n}, options)
            |> put_field(:temperature, options)
            |> put_field(:top_p, options)
-    api_call(:post, url, body, Noizu.OpenAI.Edit, options[:stream])
+    api_call(:post, url, body, Noizu.OpenAI.Edit, options)
   end
 
 

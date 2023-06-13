@@ -35,12 +35,12 @@ defmodule Noizu.OpenAI.Api.Engine do
   # Engine endpoints
   def engine(engine_id, options \\ nil) do
     url = openai_base() <> "engines/#{engine_id}"
-    api_call(:get, url, nil, Noizu.OpenAI.Engine, options[:stream])
+    api_call(:get, url, nil, Noizu.OpenAI.Engine, options)
   end
 
   def engines(options \\ nil) do
     url = openai_base() <> "engines"
-    api_call(:get, url, nil, Noizu.OpenAI.Engines, options[:stream])
+    api_call(:get, url, nil, Noizu.OpenAI.Engines, options)
   end
 
 end

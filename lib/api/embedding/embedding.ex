@@ -35,7 +35,7 @@ defmodule Noizu.OpenAI.Api.Embedding do
     body = %{input: input}
            |> put_field(:model, options, "text-embedding-ada-002")
            |> put_field(:user, options)
-    api_call(:post, url, body, Noizu.OpenAI.Embeddings, options[:stream])
+    api_call(:post, url, body, Noizu.OpenAI.Embeddings, options)
   end
 
 

@@ -98,7 +98,11 @@ defmodule Noizu.OpenAI do
   - url: The full URL for the API endpoint
   - body: The request body in map format
   - model: The model to be used for the response processing
-  - stream: A boolean value to indicate whether the request should be processed as a stream or not (default: false)
+  - options
+    - stream: A boolean value to indicate whether the request should be processed as a stream or not (default: false)
+    - raw: return raw response
+    - response_log_callback: function(finch) callback for request log.
+    - response_log_callback: function(finch, start_ms) callback for response log.
 
   ## Returns
 
@@ -114,12 +118,14 @@ defmodule Noizu.OpenAI do
         max_tokens: 50,
         temperature: 0.7
       }
-      {:ok, response} = Noizu.OpenAI.api_call(:post, url, body, Noizu.OpenAI.Completion, false)
+      {:ok, response} = Noizu.OpenAI.api_call(:post, url, body, Noizu.OpenAI.Completion, stream: false)
   """
-  def api_call(type, url, body, model, stream \\ false, raw \\ false) do
+  def api_call(type, url, body, model, options \\ nil) do
+    stream = options[:stream] || false
+    raw = options[:raw] || false
     if stream do
       with {:ok, body} <- body && Jason.encode(body) || {:ok, nil},
-           {:ok, r = %{status: 200, message: _}} <- api_call_stream(type, url, body, stream, raw) do
+           {:ok, r = %{status: 200, message: _}} <- api_call_stream(type, url, body, options) do
         {:ok, r}
         #apply(model, :from_json, [json])
       else
@@ -129,7 +135,7 @@ defmodule Noizu.OpenAI do
       end
     else
       with {:ok, body} <- body && Jason.encode(body) || {:ok, nil},
-           {:ok, %Finch.Response{status: 200, body: body}} <- api_call_fetch(type, url, body),
+           {:ok, %Finch.Response{status: 200, body: body}} <- api_call_fetch(type, url, body, options),
            {:ok, json} <- !raw && Jason.decode(body, keys: :atoms) || {:ok, body} do
         unless raw do
           {:ok, apply(model, :from_json, [json])}
@@ -189,18 +195,60 @@ defmodule Noizu.OpenAI do
   #-------------------------------
   #
   #-------------------------------
-  defp api_call_fetch(type, url, body) do
-    Finch.build(type, url, headers(), body)
-    # |> IO.inspect(label: "API_CALL_FETCH", limit: :infinity, printable_limit: :infinity, pretty: true)
+  defp api_call_fetch(type, url, body, options) do
+    ts = :os.system_time(:millisecond)
+    request = Finch.build(type, url, headers(), body)
+    |> tap(
+         fn(finch) ->
+           case request_log_callback = options[:request_log_callback] do
+             nil -> :nop
+             v when is_function(v, 1) -> v.(finch)
+             {m,f} -> apply(m, f, [finch])
+             _ -> :nop
+           end
+         end)
+      # |> IO.inspect(label: "API_CALL_FETCH", limit: :infinity, printable_limit: :infinity, pretty: true)
+    request
     |> Finch.request(Noizu.OpenAI.Finch, [pool_timeout: 600_000, receive_timeout: 600_000])
+    |> tap(fn(finch) ->
+      case response_log_callback = options[:response_log_callback] do
+        nil -> :nop
+        v when is_function(v, 3) -> v.(finch, request, ts)
+        {m,f} -> apply(m, f, [finch, request, ts])
+        _ -> :nop
+      end
+    end)
   end
 
   #-------------------------------
   #
   #-------------------------------
-  defp api_call_stream(type, url, body, callback, raw) do
-    Finch.build(type, url, headers(), body)
+  defp api_call_stream(type, url, body, options) do
+    callback = options[:stream]
+    raw = options[:raw]
+    ts = :os.system_time(:millisecond)
+    request = Finch.build(type, url, headers(), body)
+              |> tap(
+                   fn(finch) ->
+                     case request_log_callback = options[:request_log_callback] do
+                       nil -> :nop
+                       v when is_function(v, 1) -> v.(finch)
+                       {m,f} -> apply(m, f, [finch])
+                       _ -> :nop
+                     end
+                   end)
+
+
+    request
     |> Finch.stream(Noizu.OpenAI.Finch, %{status: nil, raw: raw, message: ""}, callback, [timeout: 600_000, receive_timeout: 600_000])
+    |> tap(fn(finch) ->
+      case response_log_callback = options[:response_log_callback] do
+        nil -> :nop
+        v when is_function(v, 3) -> v.(finch, request, ts)
+        {m,f} -> apply(m, f, [finch, request, ts])
+        _ -> :nop
+      end
+    end)
   end
 end
 

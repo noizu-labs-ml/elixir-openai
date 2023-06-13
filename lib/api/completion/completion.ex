@@ -76,7 +76,7 @@ defmodule Noizu.OpenAI.Api.Completion do
            |> put_field(:best_of, options)
            |> put_field(:logit_bias, options)
            |> put_field(:user, options)
-    api_call(:post, url, body, Noizu.OpenAI.Completion, options[:stream])
+    api_call(:post, url, body, Noizu.OpenAI.Completion, options)
   end
 
 

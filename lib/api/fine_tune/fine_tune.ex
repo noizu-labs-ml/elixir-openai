@@ -34,32 +34,32 @@ defmodule Noizu.OpenAI.Api.FineTune do
            |> put_field(:dataset, options)
            |> put_field(:steps, options)
            |> put_field(:metadata, options)
-    api_call(:post, url, body, Noizu.OpenAI.FineTune, options[:stream])
+    api_call(:post, url, body, Noizu.OpenAI.FineTune, options)
   end
 
   def list(options \\ nil) do
     url = openai_base() <> "fine-tunes"
-    api_call(:get, url, nil, Noizu.OpenAI.FineTunes, options[:stream])
+    api_call(:get, url, nil, Noizu.OpenAI.FineTunes, options)
   end
 
   def fetch(fine_tune_id, options \\ nil) do
     url = openai_base() <> "fine-tunes/#{fine_tune_id}"
-    api_call(:get, url, nil, Noizu.OpenAI.FineTune, options[:stream])
+    api_call(:get, url, nil, Noizu.OpenAI.FineTune, options)
   end
 
   def cancel(fine_tune_id, options \\ nil) do
     url = openai_base() <> "fine-tunes/#{fine_tune_id}/cancel"
-    api_call(:post, url, nil, Noizu.OpenAI.FineTune, options[:stream])
+    api_call(:post, url, nil, Noizu.OpenAI.FineTune, options)
   end
 
   def events(fine_tune_id, options \\ nil) do
     url = openai_base() <> "fine-tunes/#{fine_tune_id}/events"
-    api_call(:get, url, nil, Noizu.OpenAI.FineTune.Events, options[:stream])
+    api_call(:get, url, nil, Noizu.OpenAI.FineTune.Events, options)
   end
 
   def delete(model, options \\ nil) do
     url = openai_base() <> "models/#{model}"
-    api_call(:delete, url, nil, Noizu.OpenAI.FineTune.Delete, options[:stream])
+    api_call(:delete, url, nil, Noizu.OpenAI.FineTune.Delete, options)
   end
   
 end

@@ -61,7 +61,7 @@ defmodule Noizu.OpenAI.Api.Audio do
            |> put_field(:prompt, options, prompt)
            |> put_field(:temperature, options)
            |> put_field(:language, options)
-    api_call(:post, url, body, Noizu.OpenAI.Audio.Transcript, options[:stream])
+    api_call(:post, url, body, Noizu.OpenAI.Audio.Transcript, options)
   end
 
 
@@ -105,7 +105,7 @@ defmodule Noizu.OpenAI.Api.Audio do
            |> put_field(:response_format, options)
            |> put_field(:prompt, options, prompt)
            |> put_field(:temperature, options)
-    api_call(:post, url, body, Noizu.OpenAI.Audio.Transcript, options[:stream])
+    api_call(:post, url, body, Noizu.OpenAI.Audio.Transcript, options)
   end
 
 
