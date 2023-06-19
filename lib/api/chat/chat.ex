@@ -65,6 +65,8 @@ defmodule Noizu.OpenAI.Api.Chat do
            |> put_field({:completions, :n}, options)
            |> put_field(:stream, options, false)
            |> put_field(:stop, options)
+           |> put_field(:functions, options)
+           |> put_field(:function_call, options)
            |> put_field(:max_tokens, options)
            |> put_field(:presence_penalty, options)
            |> put_field(:logit_bias, options)
