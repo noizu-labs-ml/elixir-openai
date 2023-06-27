@@ -68,6 +68,7 @@ defmodule Noizu.OpenAI.Api.Chat do
            |> put_field(:functions, options)
            |> put_field(:function_call, options)
            |> put_field(:max_tokens, options)
+           |> put_field(:frequency_penalty, options)
            |> put_field(:presence_penalty, options)
            |> put_field(:logit_bias, options)
            |> put_field(:user, options)
