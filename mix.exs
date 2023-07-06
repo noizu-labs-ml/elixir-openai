@@ -7,7 +7,7 @@ defmodule Noizu.OpenAI.MixProject do
       name: "Noizu Labs: OpenAI",
       description: description(),
       package: package(),
-      version: "0.1.0",
+      version: "0.1.1",
       elixir: "~> 1.14",
       elixirc_paths: elixirc_paths(Mix.env()),
       start_permanent: Mix.env() == :prod,
