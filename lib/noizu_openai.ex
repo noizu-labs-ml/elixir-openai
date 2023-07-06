@@ -209,7 +209,7 @@ defmodule Noizu.OpenAI do
          end)
       # |> IO.inspect(label: "API_CALL_FETCH", limit: :infinity, printable_limit: :infinity, pretty: true)
     request
-    |> Finch.request(Noizu.OpenAI.Finch, [pool_timeout: 600_000, receive_timeout: 600_000])
+    |> Finch.request(Noizu.OpenAI.Finch, [pool_timeout: 600_000, receive_timeout: 600_000, request_timeout: 600_000])
     |> tap(fn(finch) ->
       case response_log_callback = options[:response_log_callback] do
         nil -> :nop
@@ -251,4 +251,3 @@ defmodule Noizu.OpenAI do
     end)
   end
 end
-
