@@ -72,7 +72,16 @@ defmodule Noizu.OpenAI.Api.Chat do
            |> put_field(:presence_penalty, options)
            |> put_field(:logit_bias, options)
            |> put_field(:user, options)
-    api_call(:post, url, body, Noizu.OpenAI.Chat, options)
+
+    case api_call(:post, url, body, Noizu.OpenAI.Chat, options) do
+      response = {:ok, _} -> response
+      error ->
+      cond do
+        options[:retry] == true -> chat(messages, put_in(options, [:retry], 3))
+        is_integer(options[:retry]) && options[:retry] > 1 -> chat(messages, put_in(options, [:retry], options[:retry] - 1))
+        :else -> error
+      end
+    end
   end
 
 
