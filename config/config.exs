@@ -12,6 +12,8 @@ config :logger, :console,
   format: "$time $metadata[$level] $message\n",
   metadata: [:request_id]
 
-config :junit_formatter,
-       report_file: "results.xml",
-       print_report_file: true
+if Mix.env == :test do
+  config :junit_formatter,
+         report_file: "results.xml",
+         print_report_file: true
+end

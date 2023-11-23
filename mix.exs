@@ -50,7 +50,7 @@ defmodule Noizu.OpenAI.MixProject do
   # Run "mix help compile.app" to learn about applications.
   def application do
     dev_apps = if Mix.env() in [:dev] do
-      [:ex_doc, :dialyxir]
+      [:ex_doc]
     else
       []
     end
