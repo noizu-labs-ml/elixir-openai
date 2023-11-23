@@ -12,19 +12,6 @@ defmodule Noizu.OpenAI.Api.Moderation do
       {:ok, moderation_response} = Noizu.OpenAI.Api.Moderation.create(input, options)
   """
 
-  # defmodule Noizu.OpenAI.Api.Embedding
-  @moduledoc """
-  Noizu.OpenAI.Api.Embedding is a module that provides functionality for generating embeddings using OpenAI's API.
-
-  This module offers one main function:
-
-    1. `create/2` - Generates an embedding for the given input content using the specified options.
-
-  ## Usage
-
-      {:ok, embedding_response} = Noizu.OpenAI.Api.Embedding.create(input, options)
-  """
-
   require Noizu.OpenAI
   import Noizu.OpenAI
 

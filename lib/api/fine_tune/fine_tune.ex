@@ -2,6 +2,7 @@
 
 defmodule Noizu.OpenAI.Api.FineTune do
   @moduledoc """
+  @deprecated
   Noizu.OpenAI.Api.FineTune is a module that provides functionality for managing fine-tuning of models using OpenAI's API.
 
   This module offers several functions for fine-tuning management:

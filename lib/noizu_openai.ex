@@ -130,7 +130,7 @@ defmodule Noizu.OpenAI do
         #apply(model, :from_json, [json])
       else
         error ->
-          Logger.warn("STREAM API ERROR: \n #{inspect error}")
+          Logger.warning("STREAM API ERROR: \n #{inspect error}")
           error
       end
     else
@@ -145,7 +145,7 @@ defmodule Noizu.OpenAI do
 
       else
         error ->
-          Logger.warn("API ERROR: \n #{inspect error}")
+          Logger.warning("API ERROR: \n #{inspect error}")
           error
       end
     end
@@ -200,18 +200,17 @@ defmodule Noizu.OpenAI do
     request = Finch.build(type, url, headers(), body)
     |> tap(
          fn(finch) ->
-           case request_log_callback = options[:request_log_callback] do
+           case options[:request_log_callback] do
              nil -> :nop
              v when is_function(v, 1) -> v.(finch)
              {m,f} -> apply(m, f, [finch])
              _ -> :nop
            end
          end)
-      # |> IO.inspect(label: "API_CALL_FETCH", limit: :infinity, printable_limit: :infinity, pretty: true)
     request
     |> Finch.request(Noizu.OpenAI.Finch, [pool_timeout: 600_000, receive_timeout: 600_000, request_timeout: 600_000])
     |> tap(fn(finch) ->
-      case response_log_callback = options[:response_log_callback] do
+      case options[:response_log_callback] do
         nil -> :nop
         v when is_function(v, 3) -> v.(finch, request, ts)
         {m,f} -> apply(m, f, [finch, request, ts])
@@ -230,7 +229,7 @@ defmodule Noizu.OpenAI do
     request = Finch.build(type, url, headers(), body)
               |> tap(
                    fn(finch) ->
-                     case request_log_callback = options[:request_log_callback] do
+                     case options[:request_log_callback] do
                        nil -> :nop
                        v when is_function(v, 1) -> v.(finch)
                        {m,f} -> apply(m, f, [finch])
@@ -242,7 +241,7 @@ defmodule Noizu.OpenAI do
     request
     |> Finch.stream(Noizu.OpenAI.Finch, %{status: nil, raw: raw, message: ""}, callback, [timeout: 600_000, receive_timeout: 600_000])
     |> tap(fn(finch) ->
-      case response_log_callback = options[:response_log_callback] do
+      case options[:response_log_callback] do
         nil -> :nop
         v when is_function(v, 3) -> v.(finch, request, ts)
         {m,f} -> apply(m, f, [finch, request, ts])
