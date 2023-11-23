@@ -1,4 +1,5 @@
 defmodule Noizu.OpenAI.Assistant do
+  @derive Jason.Encoder
   defstruct [
     :id,
     :object,

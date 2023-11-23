@@ -1,7 +1,7 @@
 
 defmodule Noizu.OpenAI.Files do
   alias Noizu.OpenAI.File
-
+  @derive Jason.Encoder
   defstruct [:list, :object]
 
   @type t :: %__MODULE__{

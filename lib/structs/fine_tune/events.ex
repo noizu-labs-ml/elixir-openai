@@ -3,7 +3,7 @@ defmodule Noizu.OpenAI.FineTune.Events do
   @moduledoc """
   A struct representing a FineTune.Events list.
   """
-
+  @derive Jason.Encoder
   defstruct [:list, :object]
   @type t :: %__MODULE__{
                list: list(Noizu.OpenAI.FineTune.Event.t),

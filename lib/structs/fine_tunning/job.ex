@@ -1,7 +1,8 @@
-defmodule Noizu.OpenAI.FineTuningJob do
+defmodule Noizu.OpenAI.FineTuning.Job do
   @moduledoc """
   Represents a fine-tuning job that has been created through the API.
   """
+  @derive Jason.Encoder
   defstruct [
     :id,
     :created_at,
@@ -38,20 +39,20 @@ defmodule Noizu.OpenAI.FineTuningJob do
 
   def from_json(map) do
     %__MODULE__{
-      id: map["id"],
-      created_at: map["created_at"],
-      error: map["error"],
-      fine_tuned_model: map["fine_tuned_model"],
-      finished_at: map["finished_at"],
-      hyperparameters: map["hyperparameters"],
-      model: map["model"],
-      object: map["object"],
-      organization_id: map["organization_id"],
-      result_files: map["result_files"],
-      status: map["status"],
-      trained_tokens: map["trained_tokens"],
-      training_file: map["training_file"],
-      validation_file: map["validation_file"]
+      id: map[:id],
+      created_at: map[:created_at],
+      error: map[:error],
+      fine_tuned_model: map[:fine_tuned_model],
+      finished_at: map[:finished_at],
+      hyperparameters: map[:hyperparameters],
+      model: map[:model],
+      object: map[:object],
+      organization_id: map[:organization_id],
+      result_files: map[:result_files],
+      status: map[:status],
+      trained_tokens: map[:trained_tokens],
+      training_file: map[:training_file],
+      validation_file: map[:validation_file]
     }
   end
 end

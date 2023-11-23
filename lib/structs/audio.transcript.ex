@@ -2,6 +2,7 @@ defmodule Noizu.OpenAI.Audio.Transcript do
   @moduledoc """
   Struct representing an Audio Transcript from the OpenAI API.
   """
+  @derive Jason.Encoder
   @type t :: %__MODULE__{
                text: String.t()
              }

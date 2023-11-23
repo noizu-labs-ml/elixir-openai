@@ -48,6 +48,7 @@ defmodule Noizu.OpenAI.Api.Chat do
                             optional(:top_p) => Noizu.OpenAI.top_p_option(),
                             optional(:completions | :n) => Noizu.OpenAI.completions_option(),
                             optional(:stream) => Noizu.OpenAI.stream_option(),
+                            optional(:seed) => any,
                             optional(:stop) => Noizu.OpenAI.stop_option(),
                             optional(:max_tokens) => Noizu.OpenAI.max_tokens_option(),
                             optional(:presence_penalty) => Noizu.OpenAI.presence_penalty_option(),
@@ -65,6 +66,7 @@ defmodule Noizu.OpenAI.Api.Chat do
            |> put_field({:completions, :n}, options)
            |> put_field(:stream, options, false)
            |> put_field(:stop, options)
+           |> put_field(:seed, options)
            |> put_field(:response_format, options)
            |> put_field(:functions, options)
            |> put_field(:function_call, options)

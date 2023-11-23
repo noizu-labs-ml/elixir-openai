@@ -39,9 +39,13 @@ Noizu.OpenAI provides modules for different OpenAI API endpoints:
 - [Noizu.OpenAI.Api.Embedding](lib/api/embedding/README.md)
 - [Noizu.OpenAI.Api.Engine](lib/api/engine/README.md)
 - [Noizu.OpenAI.Api.File](lib/api/file/README.md)
-- [Noizu.OpenAI.Api.FineTune](api/fine_tune/README.md)
+- [Noizu.OpenAI.Api.FineTune](api/fine_tune/README.md) *deprecated
 - [Noizu.OpenAI.Api.Image](api/image/README.md)
 - [Noizu.OpenAI.Api.Model](api/model/README.md)
+- [Noizu.OpenAI.Api.Thread](api/thread/README.md)
+- [Noizu.OpenAI.Api.Assistant](api/assistant/README.md)
+- [Noizu.OpenAI.Api.FineTuning](api/fine_tuning/README.md)
+
 
 Each module corresponds to a specific functionality provided by the OpenAI API. You can use the functions in these modules to interact with the respective API endpoints.
 

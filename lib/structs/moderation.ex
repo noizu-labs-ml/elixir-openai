@@ -1,4 +1,5 @@
 defmodule Noizu.OpenAI.Moderation.Category do
+  @derive Jason.Encoder
   defstruct [
     :hate,
     :hate_threatening,

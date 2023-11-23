@@ -1,4 +1,5 @@
 defmodule Noizu.OpenAI.File.Content do
+  @derive Jason.Encoder
   defstruct [:binary]
 
   @type t :: %__MODULE__{

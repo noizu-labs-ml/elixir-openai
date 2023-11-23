@@ -1,4 +1,4 @@
-defmodule Noizu.OpenAI.FineTune.Delete do
+defmodule Noizu.OpenAI.DeleteStatus do
   @derive Jason.Encoder
   defstruct [:id, :object, :deleted]
 

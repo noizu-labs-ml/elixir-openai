@@ -1,4 +1,5 @@
 defmodule Noizu.OpenAI.FineTunes do
+  @derive Jason.Encoder
   defstruct [
     :object,
     :list,

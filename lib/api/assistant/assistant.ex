@@ -6,7 +6,7 @@ defmodule Noizu.OpenAI.Api.Assistant do
 
   def list(options \\ []) do
     url = "#{@base_uri}"
-    api_call(:get, url, nil, Noizu.OpenAI.Assistant, options)
+    api_call(:get, url, nil, Noizu.OpenAI.Assistants, options)
   end
 
   def create(params, options \\ []) do
@@ -14,7 +14,7 @@ defmodule Noizu.OpenAI.Api.Assistant do
     api_call(:post, url, params, Noizu.OpenAI.Assistant, options)
   end
 
-  def retrieve(id, options \\ []) do
+  def get(id, options \\ []) do
     url = "#{@base_uri}/#{id}"
     api_call(:get, url, nil, Noizu.OpenAI.Assistant, options)
   end
@@ -26,6 +26,6 @@ defmodule Noizu.OpenAI.Api.Assistant do
 
   def delete(id, options \\ []) do
     url = "#{@base_uri}/#{id}"
-    api_call(:delete, url, nil, Noizu.OpenAI.Assistant, options)
+    api_call(:delete, url, nil, Noizu.OpenAI.DeleteStatus, options)
   end
 end

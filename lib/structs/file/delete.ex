@@ -1,4 +1,5 @@
 defmodule Noizu.OpenAI.File.Delete do
+  @derive Jason.Encoder
   defstruct [:id, :object, :deleted]
 
   @type t :: %__MODULE__{

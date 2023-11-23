@@ -1,5 +1,6 @@
 
 defmodule Noizu.OpenAI.Images do
+  @derive Jason.Encoder
   @type t :: %__MODULE__{
                created: any,
                images: any,

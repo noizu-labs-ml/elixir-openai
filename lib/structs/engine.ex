@@ -2,7 +2,7 @@ defmodule Noizu.OpenAI.Engine do
   @moduledoc """
   The Noizu.OpenAI.Engine struct represents an engine object from the OpenAI API.
   """
-
+  @derive Jason.Encoder
   defstruct [
     :id,
     :object,

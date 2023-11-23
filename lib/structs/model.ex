@@ -2,6 +2,7 @@ defmodule Noizu.OpenAI.Model do
   @moduledoc """
   Struct representing an individual OpenAI Model.
   """
+  @derive Jason.Encoder
   @type t :: %__MODULE__{
                id: String.t(),
                object: String.t(),

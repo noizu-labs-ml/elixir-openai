@@ -1,7 +1,8 @@
-defmodule Noizu.OpenAI.RunList do
+defmodule Noizu.OpenAI.Runs do
   @moduledoc """
   Represents a list of runs belonging to a thread.
   """
+  @derive Jason.Encoder
   defstruct [:object, :data, :first_id, :last_id, :has_more]
 
   @type t :: %__MODULE__{
@@ -13,11 +14,11 @@ defmodule Noizu.OpenAI.RunList do
              }
 
   def from_json(%{
-    "object" => object,
-    "data" => data,
-    "first_id" => first_id,
-    "last_id" => last_id,
-    "has_more" => has_more
+    object: object,
+    data: data,
+    first_id: first_id,
+    last_id: last_id,
+    has_more: has_more
   }) do
     %__MODULE__{
       object: object,

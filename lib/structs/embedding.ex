@@ -1,5 +1,5 @@
 defmodule Noizu.OpenAI.Embeddings do
-
+  @derive Jason.Encoder
   @type t :: %__MODULE__{
     object: any,
     embeddings: any,

@@ -1,4 +1,5 @@
 defmodule Noizu.OpenAI.File do
+  @derive Jason.Encoder
   defstruct [:id, :object, :bytes, :created_at, :filename, :purpose]
 
   @type t :: %__MODULE__{

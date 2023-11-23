@@ -1,4 +1,5 @@
 defmodule Noizu.OpenAI.Chat do
+  @derive Jason.Encoder
   defstruct [
     :id,
     :object,

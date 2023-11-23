@@ -3,6 +3,7 @@ defmodule Noizu.OpenAI.Models do
   @moduledoc """
   Struct representing a collection of OpenAI Models.
   """
+  @derive Jason.Encoder
   @type t :: %__MODULE__{
                models: list(Noizu.OpenAI.Model.t()),
                object: String.t()

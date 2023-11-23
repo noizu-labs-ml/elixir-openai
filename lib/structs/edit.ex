@@ -1,5 +1,6 @@
 
 defmodule Noizu.OpenAI.Edit do
+  @derive Jason.Encoder
   defstruct [
     :object,
     :created,

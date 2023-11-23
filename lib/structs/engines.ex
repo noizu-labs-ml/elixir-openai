@@ -2,7 +2,7 @@
 
 defmodule Noizu.OpenAI.Engines do
   alias Noizu.OpenAI.Engine
-
+  @derive Jason.Encoder
   defstruct [:list, :object]
 
   @type t :: %__MODULE__{

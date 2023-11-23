@@ -8,20 +8,20 @@ defmodule Noizu.OpenAI.Api.FineTuning do
   @openai_base "https://api.openai.com/v1"
 
   # Lists fine-tuning jobs.
-  def list_jobs(_params \\ %{}) do
+  def list(_params \\ %{}) do
     url = "#{@openai_base}/fine_tuning/jobs"
-    api_call(:get, url, nil, Noizu.OpenAI.FineTuningJobList)
+    api_call(:get, url, nil, Noizu.OpenAI.FineTuning.Jobs)
   end
 
   # Creates a new fine-tuning job.
-  def create_job(attrs) do
+  def create(attrs) do
     url = "#{@openai_base}/fine_tuning/jobs"
-    api_call(:post, url, attrs, Noizu.OpenAI.FineTuningJob)
+    api_call(:post, url, attrs, Noizu.OpenAI.FineTuning.Job)
   end
 
   # Retrieves details of a specific fine-tuning job by its ID.
-  def get_job(fine_tuning_job_id) do
+  def get(fine_tuning_job_id) do
     url = "#{@openai_base}/fine_tuning/jobs/#{fine_tuning_job_id}"
-    api_call(:get, url, nil, Noizu.OpenAI.FineTuningJob)
+    api_call(:get, url, nil, Noizu.OpenAI.FineTuning.Job)
   end
 end
