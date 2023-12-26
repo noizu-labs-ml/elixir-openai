@@ -52,7 +52,6 @@ defmodule Noizu.OpenAI.Run do
     :assistant_id => assistant_id,
     :thread_id => thread_id,
     :status => status,
-    :required_action => required_action,
     :last_error => last_error,
     :expires_at => expires_at,
     :started_at => started_at,
@@ -64,7 +63,7 @@ defmodule Noizu.OpenAI.Run do
     :tools => tools,
     :file_ids => file_ids,
     :metadata => metadata
-  }) do
+  } = json) do
     %__MODULE__{
       id: id,
       object: object,
@@ -72,7 +71,7 @@ defmodule Noizu.OpenAI.Run do
       assistant_id: assistant_id,
       thread_id: thread_id,
       status: status,
-      required_action: required_action,
+      required_action: json[:required_action],
       last_error: last_error,
       expires_at: expires_at,
       started_at: started_at,
@@ -85,5 +84,9 @@ defmodule Noizu.OpenAI.Run do
       file_ids: file_ids,
       metadata: metadata
     }
+  end
+
+  def from_json(json) do
+    {:error, {:guard_failed, json}}
   end
 end
