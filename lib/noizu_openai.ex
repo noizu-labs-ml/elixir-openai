@@ -154,10 +154,11 @@ defmodule Noizu.OpenAI do
   #-------------------------------
   #
   #-------------------------------
-  def headers() do
+  def headers(options) do
     [
       {"Content-Type", "application/json"},
       {"Authorization", "Bearer #{Application.get_env(:noizu_labs_open_ai, :openai_api_key)}"}
+      | (options[:headers] || [])
     ] |> then(
            fn(headers) ->
              if org = Application.get_env(:noizu_openai, :openai_org) do
@@ -166,7 +167,8 @@ defmodule Noizu.OpenAI do
                headers
              end
            end
-         )
+         ) |> IO.inspect
+
   end
 
   #-------------------------------
@@ -197,16 +199,16 @@ defmodule Noizu.OpenAI do
   #-------------------------------
   defp api_call_fetch(type, url, body, options) do
     ts = :os.system_time(:millisecond)
-    request = Finch.build(type, url, headers(), body)
-    |> tap(
-         fn(finch) ->
-           case options[:request_log_callback] do
-             nil -> :nop
-             v when is_function(v, 1) -> v.(finch)
-             {m,f} -> apply(m, f, [finch])
-             _ -> :nop
-           end
-         end)
+    request = Finch.build(type, url, headers(options), body)
+              |> tap(
+                   fn(finch) ->
+                     case options[:request_log_callback] do
+                       nil -> :nop
+                       v when is_function(v, 1) -> v.(finch)
+                       {m,f} -> apply(m, f, [finch])
+                       _ -> :nop
+                     end
+                   end)
     request
     |> Finch.request(Noizu.OpenAI.Finch, [pool_timeout: 600_000, receive_timeout: 600_000, request_timeout: 600_000])
     |> tap(fn(finch) ->
@@ -226,7 +228,7 @@ defmodule Noizu.OpenAI do
     callback = options[:stream]
     raw = options[:raw]
     ts = :os.system_time(:millisecond)
-    request = Finch.build(type, url, headers(), body)
+    request = Finch.build(type, url, headers(options), body)
               |> tap(
                    fn(finch) ->
                      case options[:request_log_callback] do
